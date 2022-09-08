@@ -1,18 +1,14 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpException,
   HttpStatus,
   Param,
   Patch,
   Post,
-  Query,
-  UseGuards,
   UsePipes,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import {
   CreateProfileInput,
   UpdateProfileInput,
@@ -74,7 +70,6 @@ export class ProfileController {
     return profile;
   }
 
-  //   @UseGuards(AuthGuard('jwt'))
   @Post()
   async create(
     @Body('createProfileInput') createProfileInput: CreateProfileInput,
