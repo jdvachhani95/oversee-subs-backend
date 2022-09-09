@@ -26,7 +26,7 @@ export class ProfileService {
   // query to pull user profile
   async findOneById(id: string) {
     try {
-      return await this.profileModel.findOne({ _id: id });
+      return await this.profileModel.findById(id);
     } catch (err) {
       throw new HttpException(
         {
