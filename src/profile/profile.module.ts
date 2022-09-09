@@ -8,7 +8,7 @@ import { ProfileService } from './profile.service';
   imports: [
     MongooseModule.forFeature(
       [{ name: 'Profile', schema: ProfileSchema }],
-      'profileDB',
+      'osUsersDB',
     ),
   ],
   controllers: [ProfileController],
