@@ -7,6 +7,9 @@ import {
   Param,
   Patch,
   Post,
+  Request,
+  UnauthorizedException,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import {
@@ -15,9 +18,10 @@ import {
 } from './dto/create-profile.input';
 import { Profile } from './profile.schema';
 import { ProfileService } from './profile.service';
-import { comparePassword, encodePassword } from '../utils/passwordUtils';
+import { encodePassword } from '../utils/passwordUtils';
 import { JoiValidationPipe } from 'src/validations/validation.pipe';
 import { UpdateProfileInputValidationSchema } from 'src/validations/updateProfile.validation';
+import { JwtAuthGuard } from 'src/auth/guards/jwt--auth.guard';
 
 @Controller('profiles')
 export class ProfileController {
@@ -30,44 +34,15 @@ export class ProfileController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async find(@Param('id') id: string) {
-    return new Promise((resolve, reject) => {
-      resolve(this.profileService.findOneById(id));
-    });
-  }
-
-  @Post('login')
-  async login(@Body('loginInfo') loginInfo) {
-    const userProfile = await this.profileService
-      .findOneByEmail(loginInfo.email)
-      .then((profile) => {
-        return profile;
-      })
-      .catch((err) => {
-        throw new HttpException(
-          {
-            status: HttpStatus.FORBIDDEN,
-            error: 'Account with given email does not exist',
-          },
-          HttpStatus.FORBIDDEN,
-        );
-      });
-    const isMatch = await comparePassword(
-      userProfile.password,
-      loginInfo.password,
-    );
-    if (!isMatch) {
-      throw new HttpException(
-        {
-          status: HttpStatus.UNAUTHORIZED,
-          error: 'provided credential is not correct',
-        },
-        HttpStatus.UNAUTHORIZED,
-      );
+  async find(@Request() req) {
+    const { userId: parsedId } = req.user;
+    const { id } = req.params;
+    if (id !== parsedId) {
+      throw new UnauthorizedException();
     }
-    const { password, ...profile } = userProfile;
-    return profile;
+    return await this.profileService.findOneById(id);
   }
 
   @Post()
