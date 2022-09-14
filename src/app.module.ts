@@ -5,14 +5,16 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProfileModule } from './profile/profile.module';
 import { AuthModule } from './auth/auth.module';
+import { GroupModule } from './group/group.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGODB_CONNECTION_STRING_PROFILE, {
-      connectionName: 'profileDB',
+    MongooseModule.forRoot(process.env.MONGODB_CONNECTION_STRING_OS_USERS_DB, {
+      connectionName: 'osUsersDB',
     }),
     ProfileModule,
     AuthModule,
+    GroupModule,
   ],
   controllers: [AppController],
   providers: [AppService],
