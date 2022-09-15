@@ -10,7 +10,7 @@ import {
 @Injectable()
 export class ProfileService {
   constructor(
-    @InjectModel('Profile', 'profileDB')
+    @InjectModel('Profile', 'osUsersDB')
     private profileModel: Model<ProfileDocument>,
   ) {}
 
