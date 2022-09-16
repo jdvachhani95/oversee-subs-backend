@@ -1,20 +1,20 @@
-const bcrypt = require('bcrypt');
+import { genSaltSync, hashSync, compareSync } from 'bcrypt-nodejs';
 
-export const encodePassword = async (password: string) => {
+export const encodePassword = (password: string) => {
   try {
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
+    const salt = genSaltSync();
+    const hash = hashSync(password, salt);
     return hash;
   } catch (error) {
     console.error(error.message);
   }
 };
-export const comparePassword = async (
+export const comparePassword = (
   registeredPassword: string,
   enteredPassword: string,
 ) => {
   try {
-    const isSame = await bcrypt.compare(enteredPassword, registeredPassword);
+    const isSame = compareSync(enteredPassword, registeredPassword);
     return isSame;
   } catch (error) {
     console.error(error.message);
