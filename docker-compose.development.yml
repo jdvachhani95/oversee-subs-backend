@@ -10,8 +10,6 @@ services:
     ports:
       - ${PORT}:${PORT}
       - 9229:9229
-    env_file:
-      - .env
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
