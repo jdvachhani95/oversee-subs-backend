@@ -48,4 +48,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          remote_branch: main
+          branch: main
+        env:
+          HD_MONGODB_CONNECTION_STRING_OS_USERS_DB: ${{secrets.MONGODB_CONNECTION_STRING_OS_USERS_DB}}
+          HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
