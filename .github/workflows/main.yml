@@ -30,7 +30,6 @@ jobs:
           ECR_REPOSITORY: ${{secrets.ECR_REPOSITORY}}
           IMAGE_TAG: ${{github.sha}}
           NODE_ENV: development
-          PORT: ${{secrets.PORT}}
         run: |
           docker-compose -f docker-compose.development.yml build app
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
