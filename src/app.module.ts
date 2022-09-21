@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { ProfileModule } from './profile/profile.module';
 import { AuthModule } from './auth/auth.module';
 import { GroupModule } from './group/group.module';
+import { HealthModule } from './health/health.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -14,6 +15,7 @@ import { GroupModule } from './group/group.module';
     ProfileModule,
     AuthModule,
     GroupModule,
+    HealthModule,
   ],
   controllers: [AppController],
 })
