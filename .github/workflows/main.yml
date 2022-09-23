@@ -31,7 +31,7 @@ jobs:
           IMAGE_TAG: ${{github.sha}}
           NODE_ENV: development
         run: |
-          docker-compose -f docker-compose.development.yml build app
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Logout to Amazon ECR
@@ -49,8 +49,13 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
+          docker_build_args: |
+            HD_MONGODB_CONNECTION_STRING_OS_USERS_DB
+            HD_JWT_SECRET
+            NODE_ENV
           healthcheck: 'https://oversee-subs-be.herokuapp.com/health'
           branch: main
         env:
           HD_MONGODB_CONNECTION_STRING_OS_USERS_DB: ${{secrets.MONGODB_CONNECTION_STRING_OS_USERS_DB}}
           HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
+          NODE_ENV: development
