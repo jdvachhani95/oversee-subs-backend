@@ -8,7 +8,7 @@ async function bootstrap() {
   const PORT = configService.get<number>('PORT');
   if (PORT) {
     console.log('PORT Defined is:', PORT);
-  } else console.log('PORT is not Definedd');
+  } else console.log('PORT is not Defined');
   const MONGO_URI = configService.get<string>(
     'MONGODB_CONNECTION_STRING_OS_USERS_DB',
   );
